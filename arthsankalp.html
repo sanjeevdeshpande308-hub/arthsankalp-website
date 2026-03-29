@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arthsankalp Finmart LLP - Mutual Fund Distributor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        /* Login Modal */
+        .login-btn {
+            background: #ffd700;
+            color: #1e3c72;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #ffed4a;
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+
+        .login-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30,60,114,0.4);
+        }
+
+        .dashboard {
+            display: none;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(30,60,114,0.9), rgba(42,82,152,0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffd700"/><stop offset="100%" stop-color="%23ffed4a"/></radialGradient></defs><rect width="100%" height="200" fill="url(%23a)"/></svg>');
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: #ffd700;
+            color: #1e3c72;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #ffed4a;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255,215,0,0.4);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1e3c72;
+        }
+
+        /* SIP Section */
+        .sip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .sip-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .sip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .sip-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Funds Section */
+        .funds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .fund-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .fund-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .fund-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .fund-body {
+            padding: 1.5rem;
+        }
+
+        .fund-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .fund-details {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .fund-returns {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 3rem 0 1rem;
+        }
+
+        .social-links {
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">💰 Arthsankalp Finmart LLP</div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#sip">SIP</a></li>
+                        <li><a href="#funds">Mutual Funds</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <button class="login-btn" onclick="openLogin()">Login</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #1e3c72;">Member Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Login ID</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-submit">Login</button>
+            </form>
+            <div id="dashboard" class="dashboard">
+                <h3>Welcome back, <span id="userName"></span>!</h3>
+                <p>Your portfolio is ready. Check your investments below.</p>
+                <button onclick="logout()" class="login-submit" style="background: #dc3545;">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Your Wealth, Our Commitment</h1>
+            <p>Arthsankalp Finmart LLP - Your Trusted Mutual Fund Distributor</p>
+            <a href="#funds" class="cta-btn">Explore Mutual Funds</a>
+        </div>
+    </section>
+
+    <!-- SIP Section -->
+    <section id="sip" class="container">
+        <h2 class="section-title">What is SIP? Systematic Investment Plan</h2>
+        <div class="sip-grid">
+            <div class="sip-card">
+                <div class="sip-icon">📈</div>
+                <h3>Rupee Cost Averaging</h3>
+                <p>Invest fixed amount regularly. Buy more units when market is low, fewer when high. Average cost over time.</p>
+            </div>
+            <div class="sip-card">
+                <div class="sip-icon">⚖️</div>
+                <h3>Disciplined Investing</h3>
+                <p>Forces you to invest regularly regardless of market conditions. Removes emotional decision making.</p>
+            </div>
+            <div class="sip-card">
+                <div class="sip-icon">💎</div>
+                <h3>Power of Compounding</h3>
+                <p>Your returns generate more returns. Small regular investments grow into substantial wealth over time.</p>
+            </div>
+            <div class="sip-card">
+                <div class="sip-icon">⏰</div>
+                <h3>Flexible & Affordable</h3>
+                <p>Start with just ₹500/month. Pause, increase, or stop anytime. Perfect for salaried individuals.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mutual Funds Section -->
+    <section id="funds" style="background: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title">Our Mutual Fund Portfolio</h2>
+            <div class="funds-grid">
+                <div class="fund-card">
+                    <div class="fund-header">
+                        <h3>Large Cap Fund</h3>
+                    </div>
+                    <div class="fund-body">
+                        <div class="fund-name">HDFC Top 100 Fund</div>
+                        <div class="fund-details">Minimum ₹5,000 | Risk: Moderate</div>
+                        <div class="fund-returns">1 Yr: 18.5% | 3 Yr: 15.2% | 5 Yr: 14.8%</div>
+                    </div>
+                </div>
+
+                <div class="fund-card">
+                    <div class="fund-header">
+                        <h3>Mid Cap Fund</h3>
+                    </div>
+                    <div class="fund-body">
+                        <div class="fund-name">Kotak Emerging Equity</div>
+                        <div class="fund-details">Minimum ₹5,000 | Risk: High</div>
+                        <div class="fund-returns">1 Yr: 28.3% | 3 Yr: 22.1% | 5 Yr: 24.5%</div>
+                    </div>
+                </div>
+
+                <div class="fund-card">
+                    <div class="fund-header">
+                        <h3>Small Cap Fund</h3>
+                    </div>
+                    <div class="fund-body">
+                        <div class="fund-name">Nippon Small Cap Fund</div>
+                        <div class="fund-details">Minimum ₹5,000 | Risk: Very High</div>
+                        <div class="fund-returns">1 Yr: 42.7% | 3 Yr: 32.8% | 5 Yr: 35.2%</div>
+                    </div>
+                </div>
+
+                <div class="fund-card">
+                    <div class="fund-header">
+                        <h3>Flexi Cap Fund</h3>
+                    </div>
+                    <div class="fund-body">
+                        <div class="fund-name">Parag Parikh Flexi Cap</div>
+                        <div class="fund-details">Minimum ₹1,000 | Risk: Moderate</div>
+                        <div class="fund-returns">1 Yr: 25.6% | 3 Yr: 20.3% | 5 Yr: 22.1%</div>
+                    </div>
+                </div>
+
+                <div class="fund-card">
+                    <div class="fund-header">
+                        <h3>Debt Fund</h3>
+                    </div>
+                    <div class="fund-body">
+                        <div class="fund-name">ICICI Pru Corporate Bond</div>
+                        <div class="fund-details">Minimum ₹5,000 | Risk: Low</div>
+                        <div class="fund-returns">1 Yr: 7.8% | 3 Yr: 6.5% | 5 Yr: 7.2%</div>
+                    </div>
+                </div>
+
+                <div class="fund-card">
+                    <div class="fund-header">
+                        <h3>Hybrid Fund</h3>
+                    </div>
+                    <div class="fund-body">
+                        <div class="fund-name">HDFC Balanced Advantage</div>
+                        <div class="fund-details">Minimum ₹5,000 | Risk: Moderate</div>
+                        <div class="fund-returns">1 Yr: 16.2% | 3 Yr: 14.8% | 5 Yr: 15.5%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Arthsankalp Finmart LLP</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.1rem;">
+                <p>Arthsankalp Finmart LLP is a SEBI registered mutual fund distributor committed to helping you achieve your financial goals through systematic investment plans and diversified mutual fund portfolios.</p>
+                <br>
+                <p>With years of experience in wealth management, our expert advisors provide personalized investment solutions tailored to your risk profile and financial objectives.</p>
+                <br>
+                <div style="background: #ffd700; padding: 2rem; border-radius: 10px; margin-top: 2rem;">
+                    <h3 style="color: #1e3c72;">Ready to Start Your Investment Journey?</h3>
+                    <p><strong>Login now</strong> to access your portfolio or <strong>contact us</strong> to begin your SIP today!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>Arthsankalp Finmart LLP</h3>
+            <p>Your Partner in Wealth Creation</p>
+            <div class="social-links">
+                <a href="#">📱 WhatsApp</a>
+                <a href="#">📧 Email</a>
+                <a href="#">📞 Call</a>
+            </div>
+            <p>&copy; 2024 Arthsankalp Finmart LLP. All rights reserved. | SEBI Registered Mutual Fund Distributor</p>
+        </div>
+    </footer>
+
+    <script>
+        // Login System
+        const loginForm = document.getElementById('loginForm');
+        const loginModal = document.getElementById('loginModal');
+        const dashboard = document.getElementById('dashboard
